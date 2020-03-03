@@ -1,5 +1,29 @@
-.comingSoonWrapper {
+.topPad {
   padding-top: 20px;
+}
+.topPadXL {
+  padding-top: 30px;
+}
+.rPad {
+  padding-right: 5px;
+}
+.rMar {
+  margin-right: 10px;
+}
+
+.innerPad {
+  padding-top: 6px;
+  padding-bottom: 6px;
+  padding-right: 6px;
+  padding-left: 6px;
+}
+
+.topMargin {
+  margin-top: 20px;
+}
+.redBorder {
+  border-color: red;
+  border-width: 2px;
 }
 
 .awsnapImg {
@@ -9,6 +33,18 @@
   margin-right: auto;
 }
 
-.searchBarWrapper {
-  padding-top: 20px;
+.iconImg {
+  max-width: 100px;
+  max-height: 100px;
+}
+.smImg {
+  max-width: 30px;
+  max-height: 30px;
+}
+
+.flex1 {
+  width: 100%;
+}
+.gold {
+  color: #fcba03;
 }

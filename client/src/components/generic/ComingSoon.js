@@ -9,7 +9,7 @@ import Card from 'react-bootstrap/Card';
 
 const ComingSoon = (props) => (
   <Container>
-  <Row className="comingSoonWrapper">
+  <Row className="topPadding">
     <Col>
       <Card className="bg-light text-dark">
       <Card.Img className="awsnapImg" variant="top" src={awsnap} alt="Card image" />

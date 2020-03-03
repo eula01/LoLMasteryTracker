@@ -4,14 +4,15 @@ import axios from 'axios';
 
 import '../../escape.css'
 import s from '../../search.svg';
+import Results from './Results.js';
 
-import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import FormControl from 'react-bootstrap/FormControl'
 import InputGroup from 'react-bootstrap/InputGroup';
 import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton'
 import Button from 'react-bootstrap/Button';
+import Spinner from 'react-bootstrap/Spinner';
 
 class SummonerSearch extends React.Component {
   constructor(props) {
@@ -20,7 +21,8 @@ class SummonerSearch extends React.Component {
     this.state = {
       searchQuery: '',
       region: 'Select region',
-      summonerData: null
+      isLoading: false,
+      profileData: null
     }
 
     this.handleChange = this.handleChange.bind(this);
@@ -29,7 +31,6 @@ class SummonerSearch extends React.Component {
   }
 
   regionChange(ekey) {
-    console.log(ekey);
     this.setState({
       region: ekey
     })
@@ -45,9 +46,15 @@ class SummonerSearch extends React.Component {
     e.preventDefault();
     console.log('Search submitted!');
 
+    this.setState({ isLoading: !this.state.isLoading })
+
     axios.get('/api/search', { params: this.state })
       .then((res) => {
-        console.log(res);
+        console.log('summoner data from API: ', res.data);
+        this.setState({
+          isLoading: !this.state.isLoading,
+          profileData: res.data
+        });
       })
       .catch((err) => {
         console.log(err);
@@ -55,10 +62,10 @@ class SummonerSearch extends React.Component {
   }
 
   render() {
-    console.log('%c⧭', 'color: #00e600', this.state)
+    // console.log('%c⧭', 'color: #fc432a', this.state)
     return(
-      <Container>
-        <Form onSubmit={this.handleSubmit} className="searchBarWrapper">
+      <div>
+        <Form onSubmit={this.handleSubmit} className="topPad">
           <InputGroup>
 
             <FormControl
@@ -80,7 +87,18 @@ class SummonerSearch extends React.Component {
             <Button onClick={this.handleSubmit} variant="outline-secondary" ><img src={s}/></Button>
           </InputGroup>
         </Form>
-      </Container>
+
+        {
+          this.state.profileData ?
+          <Results profileData={this.state.profileData} rg={this.state.region}/> :
+          this.state.isLoading ?
+          <div className="d-flex justify-content-center topPadding">
+            <Spinner animation="border"/>
+          </div>
+          :
+          <div></div>
+        }
+      </div>
     );
   }
 }
