@@ -1,0 +1,14 @@
+{
+  "name": "lol-mastery-tracker",
+  "version": "1.0.0",
+  "description": "A webapp to track League of Legends mastery points",
+  "author": "vtsu3",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.19.2",
+    "express": "^4.17.1"
+  },
+  "scripts": {
+    "start": "nodemon server/index.js"
+  }
+}

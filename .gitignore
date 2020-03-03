@@ -1,0 +1,9 @@
+# macOS
+.DS_Store
+
+# NPM
+node_modules
+package-lock.json
+
+# API keys
+server/config.js
