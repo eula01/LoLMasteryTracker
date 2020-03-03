@@ -1,7 +1,9 @@
 /* eslint-disable jsx-a11y/alt-text */
 import React from 'react';
-import '../escape.css'
-import s from '../search.svg';
+import axios from 'axios';
+
+import '../../escape.css'
+import s from '../../search.svg';
 
 import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
@@ -16,8 +18,9 @@ class SummonerSearch extends React.Component {
     super(props);
 
     this.state = {
-      query: '',
-      region: 'Select region'
+      searchQuery: '',
+      region: 'Select region',
+      summonerData: null
     }
 
     this.handleChange = this.handleChange.bind(this);
@@ -25,9 +28,10 @@ class SummonerSearch extends React.Component {
     this.regionChange = this.regionChange.bind(this);
   }
 
-  regionChange({ target }) {
+  regionChange(ekey) {
+    console.log(ekey);
     this.setState({
-      region: target.name
+      region: ekey
     })
   }
 
@@ -37,17 +41,21 @@ class SummonerSearch extends React.Component {
     });
   }
 
-
-
   handleSubmit(e) {
     e.preventDefault();
-    // Validation check
+    console.log('Search submitted!');
 
-    console.log('hello from the form submit handler !!! XDDDD');
+    axios.get('/api/search', { params: this.state })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
   render() {
-    console.log('%c⧭', 'color: #00e600', this.state);
+    console.log('%c⧭', 'color: #00e600', this.state)
     return(
       <Container>
         <Form onSubmit={this.handleSubmit} className="searchBarWrapper">
@@ -55,16 +63,19 @@ class SummonerSearch extends React.Component {
 
             <FormControl
               onChange={this.handleChange}
-              value={this.state.query}
-              name="query"
+              value={this.state.searchQuery}
+              name="searchQuery"
               type="text"
               placeholder="Search a summoner..."
             />
-            <DropdownButton id="dropdown-basic-button" title={this.state.region}>
-              <Dropdown.Item onClick={this.regionChange} name="NA">NA</Dropdown.Item>
-              <Dropdown.Item onClick={this.regionChange} name="EUW">EUW</Dropdown.Item>
-              <Dropdown.Item onClick={this.regionChange} name="EUNE">EUNE</Dropdown.Item>
-              <Dropdown.Item onClick={this.regionChange} name="KR">KR</Dropdown.Item>
+            <DropdownButton
+            id="dropdown-basic-button"
+            title={this.state.region === "EUN" ? "EUNE" : this.state.region}
+            >
+              <Dropdown.Item onSelect={this.regionChange} eventKey="NA" >NA</Dropdown.Item>
+              <Dropdown.Item onSelect={this.regionChange} eventKey="EUW" >EUW</Dropdown.Item>
+              <Dropdown.Item onSelect={this.regionChange} eventKey="EUN" >EUNE</Dropdown.Item>
+              <Dropdown.Item onSelect={this.regionChange} eventKey="KR" >KR</Dropdown.Item>
             </DropdownButton>
             <Button onClick={this.handleSubmit} variant="outline-secondary" ><img src={s}/></Button>
           </InputGroup>

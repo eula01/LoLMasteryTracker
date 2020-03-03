@@ -1,9 +1,8 @@
 import React from 'react';
-import axios from 'axios';
 
 import Container from 'react-bootstrap/Container';
 import NavbarWrap from './NavbarWrap.js';
-import Search from './Search.js';
+import Search from './SearchView/Search.js';
 import Esports from './Esports.js';
 import MyChampPool from './MyChampPool.js';
 
@@ -12,20 +11,10 @@ class App extends React.Component {
     super(props);
 
     this.state = {
-      view: 'Search',
-      data: null
+      view: 'Search'
     }
 
     this.changeViewApp = this.changeViewApp.bind(this);
-  }
-
-  componentDidMount() {
-    axios.get('/test69')
-      .then((res) => {
-        this.setState({
-          data: res.data
-        });
-      });
   }
 
   changeViewApp(view) {
@@ -42,7 +31,6 @@ class App extends React.Component {
       <div>Client error: invalid view</div>
     );
   }
-
 
   render() {
     return (
